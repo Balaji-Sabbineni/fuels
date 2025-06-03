@@ -23,4 +23,10 @@ router.patch('/:id/newAsset', userController.addAssetsToUser);
 // add address to a user
 router.patch('/:id/newAddress', userController.addAddressToUser);
 
+// get addresses of a user
+router.get('/:id/getAddresses', userController.getUserAddresses);
+
+// get addresses of a user
+router.get('/:id/getAssets', userController.getUserAssets);
+
 module.exports = router;

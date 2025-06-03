@@ -100,3 +100,25 @@ exports.addAddressToUser = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+// Get addresses of a user by ID
+exports.getUserAddresses = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id, 'address');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user.address);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// Get assets of a user by ID
+exports.getUserAssets = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id, 'assets');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user.assets);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};

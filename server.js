@@ -16,7 +16,7 @@ app.use(express.json());
 // --- Define Routes Later ---
 // app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/user.route'));
-// app.use('/api/drivers', require('./routes/driverRoutes'));
+app.use('/api/drivers', require('./routes/driver.route'));
 // app.use('/api/admin', require('./routes/adminRoutes'));
 
 // --- Error Handling Middleware Later ---

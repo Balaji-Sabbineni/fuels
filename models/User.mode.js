@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -21,6 +20,11 @@ const UserSchema = new mongoose.Schema({
         }
     ],
     role: { type: String, enum: ['normal', 'credited'], default: 'normal' },
+    creditAvailable: {
+        type: Number,
+        required: function() { return this.role === 'credited'; },
+        default: function() { return this.role === 'credited' ? 0 : undefined; }
+    },
     assets: [
         {
             name: { type: String, required: true },

@@ -1,0 +1,40 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const UserSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phoneNumber: { type: String },
+    companyName: { type: String },
+    gstNumber: { type: String },
+    address: {
+        typeOfLocation: String,
+        company: String,
+        building: String,
+        street: String,
+        landmark: String,
+        city: String,
+        state: String,
+        pin: Number,
+        maps: String,
+    },
+    role: { type: String, enum: ['normal', 'credited'], default: 'normal' },
+    assets: [
+        {
+            name: { type: String, required: true },
+            type: { type: String, required: true },
+            industry: { type: String, required: true }
+        }
+    ],
+    feedback: [
+        {
+            name: { type: String, required: true },
+            issueType: { type: String, enum: ['bug', 'feature', 'other'], required: true, default: 'Issue type' },
+            message: { type: String, required: true }
+        }
+    ]
+}, { timestamps: true });
+
+
+
+module.exports = mongoose.model('User', UserSchema);

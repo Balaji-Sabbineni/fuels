@@ -7,17 +7,19 @@ const UserSchema = new mongoose.Schema({
     phoneNumber: { type: String },
     companyName: { type: String },
     gstNumber: { type: String },
-    address: {
-        typeOfLocation: String,
-        company: String,
-        building: String,
-        street: String,
-        landmark: String,
-        city: String,
-        state: String,
-        pin: Number,
-        maps: String,
-    },
+    address: [
+        {
+            typeOfLocation: String,
+            company: String,
+            building: String,
+            street: String,
+            landmark: String,
+            city: String,
+            state: String,
+            pin: Number,
+            maps: String,
+        }
+    ],
     role: { type: String, enum: ['normal', 'credited'], default: 'normal' },
     assets: [
         {

@@ -18,6 +18,9 @@ router.put('/:id', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
 // Add assets to a user
-router.patch('/:id/assets', userController.addAssetsToUser);
+router.patch('/:id/newAsset', userController.addAssetsToUser);
+
+// add address to a user
+router.patch('/:id/newAddress', userController.addAddressToUser);
 
 module.exports = router;

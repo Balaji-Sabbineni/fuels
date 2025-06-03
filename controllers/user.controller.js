@@ -77,3 +77,26 @@ exports.addAssetsToUser = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+// Add additional addresses to a user
+exports.addAddressToUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { address } = req.body;
+
+        if (!address || typeof address !== 'object') {
+            return res.status(400).json({ error: 'Address must be a valid object' });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            id,
+            { $push: { address: address } },
+            { new: true, runValidators: true }
+        );
+
+        if (!user) return res.status(404).json({ error: 'User not found' });
+        res.json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};

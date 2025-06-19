@@ -1,4 +1,5 @@
-const User = require('../models/User.mode.js');
+const AddressModel = require('../models/Address.model.js');
+const User = require('../models/User.model.js');
 
 // Create a new user
 exports.createUser = async (req, res) => {
@@ -88,9 +89,11 @@ exports.addAddressToUser = async (req, res) => {
             return res.status(400).json({ error: 'Address must be a valid object' });
         }
 
+        const newAddress = await AddressModel.create(address);
+
         const user = await User.findByIdAndUpdate(
             id,
-            { $push: { address: address } },
+            { $push: { address: newAddress._id } },
             { new: true, runValidators: true }
         );
 

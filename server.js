@@ -17,6 +17,7 @@ app.use(express.json());
 // app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/user.route'));
 app.use('/api/drivers', require('./routes/driver.route'));
+app.use('/api/orders', require('./routes/order.route'));
 // app.use('/api/admin', require('./routes/adminRoutes'));
 
 // --- Error Handling Middleware Later ---

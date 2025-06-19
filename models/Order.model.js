@@ -35,13 +35,14 @@ const TrackingSchema = new mongoose.Schema(
 
 const OrderSchema = new mongoose.Schema(
   {
-    shippingAddress: { type: Object, rquired: true },
-    billingAddress: { type: Object, rquired: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    shippingAddress: { type: mongoose.Schema.Types.ObjectId, ref: "Address", required: true },
+    billingAddress: { type: mongoose.Schema.Types.ObjectId, ref: "Address", required: true },
     fuelQuantity: {
       type: Number,
       required: true,
     },
-    amount: {
+    amount: {// change this later as admin sets the amount for fuel.
       type: Number,
       required: true,
     },
@@ -57,21 +58,22 @@ const OrderSchema = new mongoose.Schema(
       },
     },
     tracking: {
-        type: TrackingSchema,
-        default: function() {
-            return {
-                orderConfirmation: { status: 'pending' },
-                driverAssignment: {},
-                dispatch: { status: 'pending' },
-                fuelDispense: {
-                    startDispenseOtp: generateOtp(),
-                    stopDispenseOtp: generateOtp(),
-                    startVerified: false,
-                    stopVerified: false
-                }
-            };
-        }
+      type: TrackingSchema,
+      default: function() {
+        return {
+          orderConfirmation: { status: 'pending' },
+          driverAssignment: { driverId: null },
+          dispatch: { status: 'pending' },
+          fuelDispense: {
+            startDispenseOtp: generateOtp(),
+            stopDispenseOtp: generateOtp(),
+            startVerified: false,
+            stopVerified: false
+          }
+        };
+      }
     }
-  }, { timestamps: true });
+  }, { timestamps: true }
+);
 
 module.exports = mongoose.model("Order", OrderSchema);

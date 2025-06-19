@@ -26,4 +26,7 @@ router.patch('/:id/assign-driver', orderController.assignDriver);
 // update dispatch status
 router.patch('/:id/dispatch', orderController.updateDispatchStatus);
 
+// validate startDispenseOtp
+router.patch('/:id/validate-start-otp', orderController.validateStartDispenseOtp);
+
 module.exports = router;

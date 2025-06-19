@@ -77,9 +77,10 @@ exports.assignDriver = async (req, res) => {
         if (!order) return res.status(404).json({ error: 'Order not found' });
 
         const { driverId } = req.body;
-        if (!driverId) return res.status(400).json({ error: 'driverId is required' });
+        if (!driverId) {
+            return res.status(400).json({ error: 'Driver ID is required' });
+        }
 
-        // Assign driver
         order.tracking.driverAssignment.driverId = driverId;
         await order.save();
 
@@ -107,5 +108,26 @@ exports.updateDispatchStatus = async (req, res) => {
         res.json(order);
     } catch (err) {
         res.status(400).json({ error: err.message });
+    }
+};
+
+// Validate startDispenseOtp for an order
+exports.validateStartDispenseOtp = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) return res.status(404).json({ error: 'Order not found' });
+
+        const { otp } = req.body;
+        if (!otp) return res.status(400).json({ error: 'OTP is required' });
+
+        if (order.tracking.fuelDispense.startDispenseOtp === Number(otp)) {
+            order.tracking.fuelDispense.startVerified = true;
+            await order.save();
+            return res.json({ success: true, message: 'OTP verified successfully' });
+        } else {
+            return res.status(400).json({ success: false, error: 'Invalid OTP' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };
